@@ -465,6 +465,14 @@
       align-self: flex-start; border-radius: 2px;
     }
     .fsub:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,32,64,0.2); }
+    .cquick { gap: 1rem; }
+    .cq-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--navy); margin: 0; }
+    .cq-text { font-size: 0.9rem; line-height: 1.7; color: var(--text-2, var(--text)); margin: 0 0 0.6rem; }
+    .cq-btn { display: block; width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 1rem 1.2rem; font-family: 'Inter', sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; border-radius: 2px; cursor: pointer; transition: all 0.25s; }
+    .cq-alt { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+    .cq-alt:hover { background: var(--navy); color: var(--white); }
+    @media (max-width: 600px) { .cq-btn { letter-spacing: 0.06em; padding: 0.95rem 0.6rem; } .cquick { padding: 1.6rem; } }
+    .cq-note { font-size: 0.78rem; line-height: 1.6; color: var(--text-3); margin: 0.4rem 0 0; word-break: break-word; }
     .fsuccess {
       display: none; background: #f0fdf4; border: 1px solid #86efac;
       padding: 1rem; text-align: center; font-size: 0.8rem; color: #166534; border-radius: 2px;
@@ -982,48 +990,15 @@
         </div>
       </div>
 
-      <form class="cform reveal" id="cform">
-        <div class="frow">
-          <div class="fgrp">
-            <label>Prénom *</label>
-            <input type="text" name="prenom" required placeholder="Marie">
-          </div>
-          <div class="fgrp">
-            <label>Société</label>
-            <input type="text" name="societe" placeholder="Votre entreprise">
-          </div>
-        </div>
-        <div class="fgrp">
-          <label>Email *</label>
-          <input type="email" name="email" required placeholder="contact@entreprise.fr">
-        </div>
-        <div class="fgrp">
-          <label>Type de mission</label>
-          <select name="mission">
-            <option value="">Sélectionner...</option>
-            <option>DMOS / LEA · Dispositifs médicaux</option>
-            <option>Gestion de contrats · Autre secteur</option>
-            <option>Business Support / Gestion administrative</option>
-            <option>Autre (préciser dans le message)</option>
-          </select>
-        </div>
-        <div class="fgrp">
-          <label>Type de contrat</label>
-          <select name="contrat">
-            <option value="">Sélectionner...</option>
-            <option>CDI</option>
-            <option>CDD</option>
-            <option>Freelance / Mission</option>
-            <option>À définir ensemble</option>
-          </select>
-        </div>
-        <div class="fgrp">
-          <label>Votre message</label>
-          <textarea name="message" placeholder="Décrivez votre besoin, contexte, durée envisagée..."></textarea>
-        </div>
-        <button type="submit" class="fsub">Envoyer ma demande →</button>
-        <div class="fsuccess" id="fsuccess">✓ Votre messagerie s'ouvre avec votre demande prête à envoyer : il ne reste qu'à cliquer sur « Envoyer ». Rien ne s'est ouvert ? Écrivez-moi directement à <a href="mailto:vanessa.dedecker@outlook.com">vanessa.dedecker@outlook.com</a> ou appelez le <a href="tel:+33672203903">06 72 20 39 03</a>. Je vous réponds dans les 12 heures.</div>
-      </form>
+      <div class="cform reveal cquick">
+        <p class="cq-title">Me contacter en 1 clic</p>
+        <p class="cq-text">Mission freelance, CDI ou CDD : écrivez-moi ou appelez-moi directement. Je vous réponds dans les 12 heures.</p>
+        <a class="fsub cq-btn" href="mailto:vanessa.dedecker@outlook.com?subject=Prise%20de%20contact%20%E2%80%93%20vanessa-dedecker.fr">✉ M'écrire un email</a>
+        <button type="button" class="cq-btn cq-alt" id="copyMail">⧉ Copier mon adresse email</button>
+        <a class="cq-btn cq-alt" href="tel:+33672203903">📞 M'appeler · 06 72 20 39 03</a>
+        <p class="cq-note">Vous utilisez Gmail ou Outlook dans votre navigateur ? Copiez mon adresse : <strong>vanessa.dedecker@outlook.com</strong></p>
+        <div class="fsuccess" id="fsuccess">✓ Adresse copiée : collez-la dans votre messagerie.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1103,14 +1078,13 @@
     });
   });
 
-  // Form → mailto
-  document.getElementById('cform').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const d = new FormData(this);
-    const body = `Prénom : ${d.get('prenom')}\nSociété : ${d.get('societe')}\nEmail : ${d.get('email')}\nMission : ${d.get('mission')}\nContrat : ${d.get('contrat')}\n\nMessage :\n${d.get('message')}`;
-    const subject = `Prise de contact – ${d.get('prenom')}${d.get('societe') ? ' (' + d.get('societe') + ')' : ''}`;
-    window.location.href = `mailto:vanessa.dedecker@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('fsuccess').style.display = 'block';
+  // Copier l'adresse email
+  document.getElementById('copyMail').addEventListener('click', function() {
+    const mail = 'vanessa.dedecker@outlook.com';
+    const done = () => { const m = document.getElementById('fsuccess'); m.style.display = 'block'; setTimeout(() => m.style.display = 'none', 4000); };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(mail).then(done, () => { window.prompt('Copiez mon adresse :', mail); });
+    } else { window.prompt('Copiez mon adresse :', mail); }
   });
 </script>
 </body>
