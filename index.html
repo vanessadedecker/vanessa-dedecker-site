@@ -50,7 +50,7 @@
     "email": "vanessa.dedecker@outlook.com",
     "telephone": "+33672203903",
     "url": "https://vanessa-dedecker.fr/",
-    "sameAs": ["https://www.linkedin.com/in/vanessa-de-decker"],
+    "sameAs": ["https://www.linkedin.com/in/vanessa-de-decker", "https://www.malt.fr/profile/vanessadedecker", "https://www.collective.work/profile/vanessa-de-decker"],
     "address": {"@type": "PostalAddress", "addressCountry": "FR", "description": "Full Remote France"},
     "knowsAbout": ["DMOS", "LEA 2020", "Déclarations IDAHE & EPS", "Conventions HCP", "Gestion de contrats HCP", "Partenariats DMOS", "Business Support", "Gestion administrative tous secteurs"],
     "hasOccupation": {
@@ -91,7 +91,7 @@
     "areaServed": {"@type": "Country", "name": "France"},
     "currenciesAccepted": "EUR",
     "openingHours": "Mo-Fr 09:00-18:00",
-    "sameAs": ["https://www.linkedin.com/in/vanessa-de-decker"]
+    "sameAs": ["https://www.linkedin.com/in/vanessa-de-decker", "https://www.malt.fr/profile/vanessadedecker", "https://www.collective.work/profile/vanessa-de-decker"]
   }
   </script>
 <script type="application/ld+json">
@@ -963,6 +963,13 @@
           </div>
         </div>
         <div class="c-item reveal">
+          <div class="c-icon">🧩</div>
+          <div>
+            <div class="c-lbl">Profils freelance</div>
+            <div class="c-val"><a href="https://www.malt.fr/profile/vanessadedecker" target="_blank" rel="noopener">Malt</a> · <a href="https://www.collective.work/profile/vanessa-de-decker" target="_blank" rel="noopener">Collective.work</a></div>
+          </div>
+        </div>
+        <div class="c-item reveal">
           <div class="c-icon">🌍</div>
           <div>
             <div class="c-lbl">Localisation</div>
@@ -1015,7 +1022,7 @@
           <textarea name="message" placeholder="Décrivez votre besoin, contexte, durée envisagée..."></textarea>
         </div>
         <button type="submit" class="fsub">Envoyer ma demande →</button>
-        <div class="fsuccess" id="fsuccess">✓ Merci. Je vous réponds dans les 12 heures.</div>
+        <div class="fsuccess" id="fsuccess">✓ Votre messagerie s'ouvre avec votre demande prête à envoyer : il ne reste qu'à cliquer sur « Envoyer ». Rien ne s'est ouvert ? Écrivez-moi directement à <a href="mailto:vanessa.dedecker@outlook.com">vanessa.dedecker@outlook.com</a> ou appelez le <a href="tel:+33672203903">06 72 20 39 03</a>. Je vous réponds dans les 12 heures.</div>
       </form>
     </div>
   </div>
@@ -1063,8 +1070,8 @@
   <div class="f-logo">V. <span>de Decker</span></div>
   <div class="f-text">
     Business Support · Contrats HCP / Partenariats · DMOS · LEA · Tous secteurs · Full Remote France<br>
-    <a href="mailto:vanessa.dedecker@outlook.com">vanessa.dedecker@outlook.com</a> · <span class="f-phone">06 72 20 39 03</span> ·
-    <a href="https://www.linkedin.com/in/vanessa-de-decker" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:vanessa.dedecker@outlook.com">vanessa.dedecker@outlook.com</a> · <a class="f-phone" href="tel:+33672203903">06 72 20 39 03</a> ·
+    <a href="https://www.linkedin.com/in/vanessa-de-decker" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://www.malt.fr/profile/vanessadedecker" target="_blank" rel="noopener">Malt</a> · <a href="https://www.collective.work/profile/vanessa-de-decker" target="_blank" rel="noopener">Collective.work</a>
   </div>
   <div class="f-text" style="text-align:right;">
     © 2026 Vanessa de Decker · <a href="/mentions-legales.html" style="color:rgba(192,144,48,0.85);text-decoration:none;transition:color 0.25s;" onmouseover="this.style.color='rgba(192,144,48,1)'" onmouseout="this.style.color='rgba(192,144,48,0.85)'">Mentions légales</a>
@@ -1100,10 +1107,10 @@
   document.getElementById('cform').addEventListener('submit', function(e) {
     e.preventDefault();
     const d = new FormData(this);
-    const body = `Prénom: ${d.get('prenom')}\nSociété: ${d.get('societe')}\nMission: ${d.get('mission')}\nContrat: ${d.get('contrat')}\n\nMessage:\n${d.get('message')}`;
-    window.location.href = `mailto:vanessa.dedecker@outlook.com?subject=Demande de mission – ${encodeURIComponent(d.get('prenom'))}&body=${encodeURIComponent(body)}`;
+    const body = `Prénom : ${d.get('prenom')}\nSociété : ${d.get('societe')}\nEmail : ${d.get('email')}\nMission : ${d.get('mission')}\nContrat : ${d.get('contrat')}\n\nMessage :\n${d.get('message')}`;
+    const subject = `Prise de contact – ${d.get('prenom')}${d.get('societe') ? ' (' + d.get('societe') + ')' : ''}`;
+    window.location.href = `mailto:vanessa.dedecker@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     document.getElementById('fsuccess').style.display = 'block';
-    this.reset();
   });
 </script>
 </body>
